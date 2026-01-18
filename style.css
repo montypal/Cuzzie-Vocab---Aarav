@@ -1,83 +1,82 @@
 :root {
     --gold: #d4af37;
     --dark: #1a1a1a;
-    --correct: #2ecc71;
-    --wrong: #e74c3c;
-    --bg: #f4f7f6;
+    --correct: #27ae60;
+    --wrong: #c0392b;
 }
 
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    background-color: var(--bg);
+    background: #f8f9fa;
     color: var(--dark);
 }
 
 .app-container {
     display: flex;
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
     padding: 20px;
-    gap: 30px;
+    gap: 40px;
 }
 
 .leaderboard {
-    width: 250px;
+    width: 280px;
     background: var(--dark);
     color: white;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
 }
 
 .score-item {
     display: flex;
     justify-content: space-between;
-    padding: 10px 0;
+    padding: 15px 0;
     border-bottom: 1px solid #333;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
 }
 
 .game-area { flex-grow: 1; text-align: center; }
 
-h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin-top: 0; }
+h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin-bottom: 5px; }
 
 .wheel-box { position: relative; display: inline-block; margin-top: 20px; }
 
 #wheel-pointer {
     position: absolute;
-    top: -15px; left: 50%; transform: translateX(-50%);
+    top: -10px; left: 50%; transform: translateX(-50%);
     width: 0; height: 0; 
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
-    border-top: 35px solid var(--wrong);
-    z-index: 10;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-top: 45px solid #ff4757;
+    z-index: 100;
 }
 
 #spin-button {
     display: block;
-    margin: 30px auto;
-    padding: 18px 50px;
+    margin: 25px auto;
+    padding: 20px 60px;
+    font-size: 1.2rem;
     font-weight: 600;
     background: var(--dark);
     color: white;
     border: none;
     border-radius: 50px;
     cursor: pointer;
-    transition: 0.3s ease;
+    transition: 0.2s;
 }
 
-#spin-button:hover { transform: scale(1.1); background: #333; }
+#spin-button:hover { background: #444; transform: scale(1.05); }
 
 .hidden { display: none !important; }
 
-/* Quiz Styles */
 #quiz-overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.9);
+    background: rgba(0,0,0,0.95);
     display: flex; align-items: center; justify-content: center;
-    z-index: 100;
+    z-index: 1000;
 }
 
 .quiz-card {
@@ -85,38 +84,28 @@ h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin-top: 0; }
     padding: 50px;
     border-radius: 30px;
     width: 90%;
-    max-width: 700px;
+    max-width: 750px;
+    text-align: center;
 }
 
 .word-display {
-    font-size: 3.5rem;
+    font-size: 4rem;
     font-family: 'Playfair Display', serif;
-    margin-bottom: 30px;
+    margin: 20px 0;
     color: var(--dark);
 }
 
 .option-btn {
     width: 100%;
-    padding: 20px;
+    padding: 22px;
     margin: 10px 0;
-    border: 2px solid #eee;
-    background: #f9f9f9;
+    border: 2px solid #ddd;
+    background: #fff;
     border-radius: 15px;
     cursor: pointer;
     font-size: 1.1rem;
-    text-align: left;
     transition: 0.3s;
 }
 
-/* Color feedback you requested */
-.option-btn.correct-glow {
-    background-color: var(--correct) !important;
-    color: white;
-    border-color: var(--correct);
-}
-
-.option-btn.wrong-glow {
-    background-color: var(--wrong) !important;
-    color: white;
-    border-color: var(--wrong);
-}
+.option-btn.correct-glow { background-color: var(--correct) !important; color: white; }
+.option-btn.wrong-glow { background-color: var(--wrong) !important; color: white; }
