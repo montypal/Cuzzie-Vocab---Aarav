@@ -1,7 +1,6 @@
 const cousins = ["Jaya", "Kaiya", "Aarav", "Aria", "Aakash", "Akshay"];
 let scores = { Jaya: 0, Kaiya: 0, Aarav: 0, Aria: 0, Aakash: 0, Akshay: 0 };
 
-// Words and definitions directly from the PDF
 const vocabData = [
     { w: "Axiomatic", d: "Self-evident or universally accepted as true." },
     { w: "Kaleidoscopic", d: "A complex and constantly changing pattern or scene." },
@@ -59,7 +58,7 @@ const vocabData = [
     { w: "Quotidian", d: "Daily; occurring every day." },
     { w: "Schadenfreude", d: "Pleasure derived from another's misfortune." },
     { w: "Erudite", d: "Having or showing great knowledge." },
-    { w: "Pragmatic", d: "Based on practical rather than theoretical considerations." },
+    { w: "Pragmatic", d: "Based on practical considerations." },
     { w: "Quagmire", d: "An awkward, complex, or hazardous situation." },
     { w: "Relegate", d: "Consign or dismiss to an inferior rank." },
     { w: "Reticent", d: "Not revealing one's thoughts readily." },
@@ -83,10 +82,12 @@ function drawWheel() {
         ctx.fill();
         ctx.save();
         ctx.translate(200, 200);
+        // Rotate text to center of slice
         ctx.rotate(i * slice + slice / 2);
         ctx.fillStyle = i % 2 === 0 ? "white" : "black";
-        ctx.font = "bold 16px Poppins";
-        ctx.fillText(name, 100, 5);
+        ctx.font = "bold 18px Poppins";
+        ctx.textAlign = "right";
+        ctx.fillText(name, 180, 5);
         ctx.restore();
     });
 }
@@ -100,26 +101,38 @@ function updateLeaderboard() {
 }
 
 document.getElementById('spin-button').onclick = () => {
-    const spinDeg = Math.floor(Math.random() * 360) + 1800;
+    const spinBtn = document.getElementById('spin-button');
+    spinBtn.disabled = true;
+    
+    // Spin between 5 and 10 full rotations plus a random amount
+    const extraDeg = Math.floor(Math.random() * 360);
+    const totalSpin = 1800 + extraDeg; 
+    currentRotation += totalSpin;
+    
     canvas.style.transition = "transform 4s cubic-bezier(0.15, 0, 0.15, 1)";
-    currentRotation += spinDeg;
     canvas.style.transform = `rotate(${currentRotation}deg)`;
     
     setTimeout(() => {
-        const actualDeg = (360 - (currentRotation % 360)) % 360;
-        const index = Math.floor(actualDeg / (360 / cousins.length));
+        // FIXED MATH: Calculate which slice is at the TOP (270 degrees)
+        const netRotation = currentRotation % 360;
+        const sliceSize = 360 / cousins.length;
+        
+        // The pointer is at the top (270 deg). We need to find which 
+        // slice is currently under that 270 deg mark.
+        const pointerLocation = 270;
+        let index = Math.floor((pointerLocation - netRotation + 720) % 360 / sliceSize);
+        
         currentPlayer = cousins[index];
         startQuiz();
+        spinBtn.disabled = false;
     }, 4000);
 };
 
 function startQuiz() {
-    // Pick a word randomly from the 60+ words
     const item = vocabData[Math.floor(Math.random() * vocabData.length)];
     document.getElementById('player-tag').innerText = `${currentPlayer}'s Question`;
     document.getElementById('vocab-word').innerText = item.w;
     
-    // Generate 4 total options
     let choices = [item.d];
     while(choices.length < 4) {
         let rand = vocabData[Math.floor(Math.random() * vocabData.length)].d;
@@ -135,7 +148,6 @@ function startQuiz() {
         b.className = 'option-btn';
         b.innerText = c;
         b.onclick = function() {
-            // Disable buttons so they can't spam
             const allBtns = document.querySelectorAll('.option-btn');
             allBtns.forEach(btn => btn.style.pointerEvents = 'none');
 
@@ -144,17 +156,15 @@ function startQuiz() {
                 scores[currentPlayer] += 10;
             } else {
                 this.classList.add('wrong-glow');
-                // Highlight the correct one so they see the right answer
                 allBtns.forEach(btn => {
                    if(btn.innerText === item.d) btn.classList.add('correct-glow');
                 });
             }
             
-            // Wait 1.5 seconds for them to see the color, then update and close
             setTimeout(() => {
                 updateLeaderboard();
                 document.getElementById('quiz-overlay').classList.add('hidden');
-            }, 1500);
+            }, 2000);
         };
         grid.appendChild(b);
     });
