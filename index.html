@@ -3,38 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuzzie Vocab Challenge</title>
+    <title>Cuzzie Vocab Competition</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="app-container">
+        <aside class="leaderboard">
+            <h2>Cuzzie Scores</h2>
+            <div id="score-list"></div>
+        </aside>
 
-    <div class="container">
-        <header>
-            <h1>Cuzzie Vocab Challenge</h1>
-            <p class="subtitle">May the most sagacious cousin win!</p>
-        </header>
+        <main class="game-area">
+            <header>
+                <h1>Cuzzie Vocab Challenge</h1>
+                <p id="status-text">Spin the wheel to see who answers!</p>
+            </header>
 
-        <section id="wheel-section">
-            <div class="wheel-container">
-                <div id="wheel"></div>
-                <div id="pointer"></div>
+            <div class="wheel-box">
+                <canvas id="wheelCanvas" width="400" height="400"></canvas>
+                <div id="wheel-pointer"></div>
+                <button id="spin-button">SPIN WHEEL</button>
             </div>
-            <button id="spin-btn">Spin to Start!</button>
-            <p id="turn-display">Spin the wheel to see who goes first!</p>
-        </section>
 
-        <section id="quiz-section" class="hidden">
-            <div id="question-card">
-                <h2 id="vocab-word">Word</h2>
-                <div id="options-container">
-                    </div>
+            <div id="quiz-overlay" class="hidden">
+                <div class="quiz-card">
+                    <h2 id="player-tag">Player's Turn</h2>
+                    <div class="word-display" id="vocab-word">WORD</div>
+                    <div id="options-grid"></div>
+                </div>
             </div>
-            <div id="feedback" class="hidden"></div>
-            <p id="score-display">Score: 0</p>
-        </section>
+        </main>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
