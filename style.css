@@ -1,119 +1,122 @@
 :root {
-    --primary: #6c5ce7;
-    --secondary: #a29bfe;
-    --bg: #f9f9f9;
-    --text: #2d3436;
-    --white: #ffffff;
+    --gold: #d4af37;
+    --dark: #1a1a1a;
+    --correct: #2ecc71;
+    --wrong: #e74c3c;
+    --bg: #f4f7f6;
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
-    background-color: var(--bg);
-    color: var(--text);
-    display: flex;
-    justify-content: center;
-    padding: 40px 20px;
     margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg);
+    color: var(--dark);
 }
 
-.container {
-    max-width: 600px;
-    width: 100%;
-    text-align: center;
+.app-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    gap: 30px;
 }
 
-h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 3rem;
-    margin-bottom: 0;
+.leaderboard {
+    width: 250px;
+    background: var(--dark);
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
 
-.subtitle {
-    font-style: italic;
-    color: var(--secondary);
-    margin-bottom: 40px;
+.score-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #333;
+    font-size: 1.1rem;
 }
 
-/* Spin Wheel */
-.wheel-container {
-    position: relative;
-    width: 300px;
-    height: 300px;
-    margin: 0 auto 20px;
-}
+.game-area { flex-grow: 1; text-align: center; }
 
-#wheel {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    border: 5px solid var(--text);
-    background: conic-gradient(
-        #ff7675 0% 16.6%, 
-        #74b9ff 16.6% 33.3%, 
-        #55efc4 33.3% 50%, 
-        #ffeaa7 50% 66.6%, 
-        #a29bfe 66.6% 83.3%, 
-        #fab1a0 83.3% 100%
-    );
-    transition: transform 4s cubic-bezier(0.15, 0, 0.15, 1);
-}
+h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin-top: 0; }
 
-#pointer {
+.wheel-box { position: relative; display: inline-block; margin-top: 20px; }
+
+#wheel-pointer {
     position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 20px;
-    height: 40px;
-    background: var(--text);
-    clip-path: polygon(50% 100%, 0 0, 100% 0);
+    top: -15px; left: 50%; transform: translateX(-50%);
+    width: 0; height: 0; 
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 35px solid var(--wrong);
     z-index: 10;
 }
 
-button {
-    background-color: var(--primary);
+#spin-button {
+    display: block;
+    margin: 30px auto;
+    padding: 18px 50px;
+    font-weight: 600;
+    background: var(--dark);
     color: white;
     border: none;
-    padding: 15px 30px;
-    border-radius: 30px;
-    font-size: 1rem;
+    border-radius: 50px;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: 0.3s ease;
 }
 
-button:hover {
-    transform: scale(1.05);
+#spin-button:hover { transform: scale(1.1); background: #333; }
+
+.hidden { display: none !important; }
+
+/* Quiz Styles */
+#quiz-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 100;
 }
 
-/* Quiz Style */
-.hidden { display: none; }
-
-#question-card {
-    background: var(--white);
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    margin-top: 30px;
+.quiz-card {
+    background: white;
+    padding: 50px;
+    border-radius: 30px;
+    width: 90%;
+    max-width: 700px;
 }
 
-#vocab-word {
+.word-display {
+    font-size: 3.5rem;
     font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
-    margin-top: 0;
+    margin-bottom: 30px;
+    color: var(--dark);
 }
 
 .option-btn {
-    display: block;
     width: 100%;
-    background: var(--bg);
-    color: var(--text);
+    padding: 20px;
     margin: 10px 0;
+    border: 2px solid #eee;
+    background: #f9f9f9;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 1.1rem;
     text-align: left;
-    border-radius: 10px;
-    padding: 15px;
+    transition: 0.3s;
 }
 
-.option-btn:hover {
-    background: var(--secondary);
+/* Color feedback you requested */
+.option-btn.correct-glow {
+    background-color: var(--correct) !important;
     color: white;
+    border-color: var(--correct);
+}
+
+.option-btn.wrong-glow {
+    background-color: var(--wrong) !important;
+    color: white;
+    border-color: var(--wrong);
 }
